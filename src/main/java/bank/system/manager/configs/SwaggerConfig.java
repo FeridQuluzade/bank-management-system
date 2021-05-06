@@ -32,10 +32,10 @@ public class SwaggerConfig {
     @Value("${spring.contact.email}")
     private String contactEmail;
 
-    @Value("${spring.project.title}")
+    @Value("Bank_management_system")
     private String projectTitle;
 
-    @Value("${spring.project.description}")
+    @Value("Bank Management System")
     private String projectDescription;
 
     @Value("${spring.project.version}")

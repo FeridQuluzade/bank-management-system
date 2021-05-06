@@ -10,10 +10,10 @@
         <relativePath/>
     </parent>
 
-    <groupId>az.turbo</groupId>
-    <artifactId>turboaz-backend</artifactId>
+    <groupId>az.bank</groupId>
+    <artifactId>bank-management-system</artifactId>
     <version>0.0.1</version>
-    <name>turboaz-backend</name>
+    <name>bank-management-system</name>
     <description>Turbo.az REST API</description>
 
     <properties>
