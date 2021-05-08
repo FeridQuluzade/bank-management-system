@@ -6,6 +6,7 @@ import bank.system.manager.account.domain.AccountRepository;
 import bank.system.manager.account.domain.model.Account;
 import org.modelmapper.ModelMapper;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,5 +32,10 @@ public class AccountServiceImpl implements AccountService {
     public long create(AccountCreateDto accountCreateDto) {
         Account account=modelMapper.map(accountCreateDto,Account.class);
         return accountRepository.create(account);
+    }
+
+    @Override
+    public void deleteById(long id, long deleteBy, LocalDateTime deletedDate) {
+         accountRepository.deleteById(id,deleteBy,deletedDate);
     }
 }
