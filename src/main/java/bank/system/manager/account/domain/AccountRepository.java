@@ -3,6 +3,7 @@ package bank.system.manager.account.domain;
 import bank.system.manager.account.domain.model.Account;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +62,27 @@ public class AccountRepository {
         }
     }
 
+     public void deleteById(long id, long deleteBy, LocalDateTime deletedDate){
 
+        try{
+            Class.forName(DRIVER_NAME);
+            Connection connection=DriverManager.getConnection(URL,USER,PASSWORD);
+            String query = "update customers SET is_deleted=cast(? as bit), deleted_by=?, deleted_date=? " +
+                    "where id=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, "1");
+            preparedStatement.setLong(2, deleteBy);
+            preparedStatement.setTimestamp(3, Timestamp.valueOf(deletedDate));
+            preparedStatement.setLong(4, id);
+            preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+     }
 
 
 }
