@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/accounts")
+@RequestMapping(value = "/customers")
 public class CustomerController {
     private CustomerService customerService;
 
@@ -23,7 +23,7 @@ public class CustomerController {
         this.customerService=customerService;
     }
 
-    @GetMapping(value = "retrieve-all")
+    @GetMapping(value = "/retrieve-all")
     @ResponseBody
     public List<CustomerDto> retrieveAll() {
         return customerService.retrieveAll();

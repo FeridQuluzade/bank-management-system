@@ -23,7 +23,7 @@ public class ContactController {
         this.contactService = contactService;
     }
 
-    @GetMapping(value = "retrieve-all")
+    @GetMapping(value = "/retrieve-all")
     @ResponseBody
     public List<ContactDto> retrieveAll() {
         return contactService.retrieveAll();

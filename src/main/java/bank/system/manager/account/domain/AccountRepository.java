@@ -23,7 +23,7 @@ public class AccountRepository {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                long id = resultSet.getLong("accid");
+                long id = resultSet.getLong("id");
                 double sum = resultSet.getDouble("sum");
                 long owner_id = resultSet.getLong("owner_id");
                 accounts.add(new Account(id, sum, owner_id));
@@ -43,7 +43,7 @@ public class AccountRepository {
             Optional<Account> optionalAccount = Optional.empty();
             Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
 
-            String query = "select * from Account where id=?";
+            String query = "select * from accounts where id=?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setLong(1, id);
@@ -118,7 +118,7 @@ public class AccountRepository {
         try {
             Class.forName(DRIVER_NAME);
             Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            String query = "update customers SET is_deleted=cast(? as bit), deleted_by=?, deleted_date=? " +
+            String query = "update accounts SET is_deleted=cast(? as bit), deleted_by=?, deleted_date=? " +
                     "where id=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, "1");
