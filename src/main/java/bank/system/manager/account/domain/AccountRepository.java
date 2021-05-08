@@ -49,7 +49,7 @@ public class AccountRepository {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                long sum = resultSet.getLong("sum");
+                double sum = resultSet.getDouble("sum");
                 long owner_id = resultSet.getLong("owner_id");
 
                 Account account=new Account(id,sum,owner_id);
@@ -72,7 +72,7 @@ public class AccountRepository {
 
             Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
             String query = "insert  into accounts(sum,owner_id,created_by,created_date)" +
-                    "values (?,?,?,?) returning accid";
+                    "values (?,?,?,?) returning id";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setDouble(1, account.getSum());
             preparedStatement.setLong(2, account.getOwnerId());
@@ -87,6 +87,27 @@ public class AccountRepository {
             preparedStatement.close();
             connection.close();
             return id;
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+    public void update(Account account){
+        try{
+            Class.forName(DRIVER_NAME);
+            Connection connection=DriverManager.getConnection(URL,USER,PASSWORD);
+            String query="UPDATE accounts SET id=?,sum=?,owner_id=?,updated_by=?,updated_date=? "+
+                    "where  id=?";
+            PreparedStatement preparedStatement=connection.prepareStatement(query);
+            preparedStatement.setLong(1,account.getAccId());
+            preparedStatement.setDouble(2,account.getSum());
+            preparedStatement.setLong(3,account.getOwnerId());
+            preparedStatement.setLong(4,account.getUpdatedBy());
+            preparedStatement.setTimestamp(5, Timestamp.valueOf(account.getUpdatedDate()));
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            connection.close();
+
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e.getMessage());
         }
