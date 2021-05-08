@@ -95,15 +95,15 @@ public class AccountRepository {
         try{
             Class.forName(DRIVER_NAME);
             Connection connection=DriverManager.getConnection(URL,USER,PASSWORD);
-            String query="UPDATE accounts SET id=?,sum=?,owner_id=?,updated_by=?,updated_date=? "+
+            String query="UPDATE accounts SET sum=?,owner_id=?,updated_by=?,updated_date=? "+
                     "where  id=?";
             PreparedStatement preparedStatement=connection.prepareStatement(query);
-            preparedStatement.setLong(1,account.getAccId());
-            preparedStatement.setDouble(2,account.getSum());
-            preparedStatement.setLong(3,account.getOwnerId());
-            preparedStatement.setLong(4,account.getUpdatedBy());
-            preparedStatement.setTimestamp(5, Timestamp.valueOf(account.getUpdatedDate()));
 
+            preparedStatement.setDouble(1,account.getSum());
+            preparedStatement.setLong(2,account.getOwnerId());
+            preparedStatement.setLong(3,account.getUpdatedBy());
+            preparedStatement.setTimestamp(4, Timestamp.valueOf(account.getUpdatedDate()));
+            preparedStatement.setLong(5,account.getAccId());
             preparedStatement.executeUpdate();
             preparedStatement.close();
             connection.close();

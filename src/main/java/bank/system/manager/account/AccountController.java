@@ -20,8 +20,6 @@ public class AccountController {
 
     private AccountService accountService;
 
-
-
     @Autowired
     public AccountController(AccountService accountService) {
         this.accountService = accountService;
@@ -47,7 +45,12 @@ public class AccountController {
         return accountService.create(accountCreateDto);
     }
 
-
+    @PutMapping(value = "/update")
+    public void update(@Valid @RequestBody AccountUpdateDto accountUpdateDto){
+        accountUpdateDto.setUpdatedBy(UserContextHolder.getUserId());
+        accountUpdateDto.setUpdatedDate(LocalDateTime.now());
+        accountService.update(accountUpdateDto);
+    }
     @DeleteMapping(value = "/deleted/{id}")
     public void delete(@PathVariable Long id) {
         accountService.deleteById(id, UserContextHolder.getUserId(), LocalDateTime.now());
