@@ -1,6 +1,6 @@
 package bank.system.manager.employee.application.dto;
 
-import bank.system.manager.customer.application.dto.AuditedCreateDto;
+import bank.system.manager.shared.audited.AuditedCreateDto;
 
 public class EmployeeCreateDto extends AuditedCreateDto {
 

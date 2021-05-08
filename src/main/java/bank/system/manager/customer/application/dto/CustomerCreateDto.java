@@ -1,5 +1,7 @@
 package bank.system.manager.customer.application.dto;
 
+import bank.system.manager.shared.audited.AuditedCreateDto;
+
 public class CustomerCreateDto extends AuditedCreateDto {
     private String name;
     private String gender;

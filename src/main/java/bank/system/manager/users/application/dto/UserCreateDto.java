@@ -1,7 +1,7 @@
 package bank.system.manager.users.application.dto;
 
 
-import bank.system.manager.customer.application.dto.AuditedCreateDto;
+import bank.system.manager.shared.audited.AuditedCreateDto;
 import bank.system.manager.users.domain.model.Gender;
 import bank.system.manager.users.domain.model.Role;
 
