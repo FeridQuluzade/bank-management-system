@@ -17,7 +17,7 @@ public class AccountRepository {
             Class.forName(DRIVER_NAME);
             Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
             List<Account> accounts = new ArrayList<>();
-            String query = "select accid,sum,owner_id from accounts";
+            String query = "select id,sum,owner_id from accounts";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -59,8 +59,9 @@ public class AccountRepository {
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e.getMessage());
         }
-
-
     }
+
+
+
 
 }

@@ -1,6 +1,6 @@
 package bank.system.manager.contact.application.dto;
 
-import bank.system.manager.customer.application.dto.AuditedUpdateDto;
+import bank.system.manager.shared.audited.AuditedUpdateDto;
 
 public class ContactUpdateDto extends AuditedUpdateDto {
     private long id;
