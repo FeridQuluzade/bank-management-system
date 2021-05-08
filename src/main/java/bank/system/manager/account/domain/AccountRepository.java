@@ -6,6 +6,7 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class AccountRepository {
     private final String URL = "jdbc:postgresql://localhost/bankdb";
@@ -31,6 +32,35 @@ public class AccountRepository {
             preparedStatement.close();
             connection.close();
             return accounts;
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public Optional<Account> findById(long id) {
+        try {
+            Class.forName(DRIVER_NAME);
+            Optional<Account> optionalAccount = Optional.empty();
+            Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+
+            String query = "select * from Account where id=?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                long sum = resultSet.getLong("sum");
+                long owner_id = resultSet.getLong("owner_id");
+
+                Account account=new Account(id,sum,owner_id);
+                optionalAccount=Optional.of(account);
+            }
+            resultSet.close();
+            preparedStatement.close();
+            connection.close();
+
+            return optionalAccount;
+
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -62,11 +92,11 @@ public class AccountRepository {
         }
     }
 
-     public void deleteById(long id, long deleteBy, LocalDateTime deletedDate){
+    public void deleteById(long id, long deleteBy, LocalDateTime deletedDate) {
 
-        try{
+        try {
             Class.forName(DRIVER_NAME);
-            Connection connection=DriverManager.getConnection(URL,USER,PASSWORD);
+            Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
             String query = "update customers SET is_deleted=cast(? as bit), deleted_by=?, deleted_date=? " +
                     "where id=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -82,7 +112,7 @@ public class AccountRepository {
             throw new RuntimeException(e.getMessage());
         }
 
-     }
+    }
 
 
 }
