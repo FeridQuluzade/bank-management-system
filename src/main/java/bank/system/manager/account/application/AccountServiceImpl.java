@@ -7,11 +7,13 @@ import bank.system.manager.account.application.exception.AccountNotFoundExceptio
 import bank.system.manager.account.domain.AccountRepository;
 import bank.system.manager.account.domain.model.Account;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class AccountServiceImpl implements AccountService {
     private AccountRepository accountRepository;
     private ModelMapper modelMapper;
@@ -45,6 +47,12 @@ public class AccountServiceImpl implements AccountService {
     public long create(AccountCreateDto accountCreateDto) {
         Account account = modelMapper.map(accountCreateDto, Account.class);
         return accountRepository.create(account);
+    }
+
+    @Override
+    public void update(AccountUpdateDto accountUpdateDto) {
+          Account account=modelMapper.map(accountUpdateDto,Account.class);
+          accountRepository.update(account);
     }
 
     @Override

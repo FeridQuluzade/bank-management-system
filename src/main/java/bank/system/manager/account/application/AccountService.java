@@ -15,6 +15,8 @@ public interface AccountService {
 
     long create(AccountCreateDto accountCreateDto);
 
+    void update(AccountUpdateDto accountUpdateDto);
+
     void  deleteById(long id, long deleteBy, LocalDateTime deletedDate);
 
 }
