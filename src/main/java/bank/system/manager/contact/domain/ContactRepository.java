@@ -82,7 +82,7 @@ public class ContactRepository {
 
             Connection connection=DriverManager.getConnection(URL,USER,PASSWORD);
             String query="insert into contacts (address,city,email,mobile,pin,created_by,created_date) " +
-                    "values (?,?,?,?,?,?,?) returning id" ;
+                    "values (?,?,?,?,?,?,?) returning id";
             PreparedStatement preparedStatement= connection.prepareStatement(query);
             preparedStatement.setString(1,contact.getAddress());
             preparedStatement.setString(2,contact.getCity());

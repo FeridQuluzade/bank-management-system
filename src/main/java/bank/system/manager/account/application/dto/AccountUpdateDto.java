@@ -6,14 +6,16 @@ public class AccountUpdateDto extends AuditedUpdateDto {
     private long accId;
     private double sum;
     private long ownerId;
+   private double year;
 
     public AccountUpdateDto() {
     }
 
-    public AccountUpdateDto(long accId, double sum, long ownerId) {
+    public AccountUpdateDto(long accId, double sum, long ownerId, double year) {
         this.accId = accId;
         this.sum = sum;
         this.ownerId = ownerId;
+        this.year = year;
     }
 
     public long getAccId() {
@@ -38,6 +40,14 @@ public class AccountUpdateDto extends AuditedUpdateDto {
 
     public void setOwnerId(long ownerId) {
         this.ownerId = ownerId;
+    }
+
+    public double getYear() {
+        return year;
+    }
+
+    public void setYear(double year) {
+        this.year = year;
     }
 
 

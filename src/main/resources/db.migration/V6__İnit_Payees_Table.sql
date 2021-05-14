@@ -1,5 +1,6 @@
 create table payees(
                        id bigserial NOT NULL ,
+                       payment int8 null,
                        accountid int8 null,
                        created_by int8 null,
                        created_date timestamp not null default CURRENT_TIMESTAMP,

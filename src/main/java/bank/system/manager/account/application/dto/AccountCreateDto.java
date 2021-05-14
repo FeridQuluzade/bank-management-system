@@ -5,15 +5,16 @@ import bank.system.manager.shared.audited.AuditedCreateDto;
 public class AccountCreateDto extends AuditedCreateDto {
     private double sum;
     private long ownerId;
+    private double year;
 
     public AccountCreateDto() {
     }
 
-    public AccountCreateDto(double sum, long ownerId) {
+    public AccountCreateDto(double sum, long ownerId, double year) {
         this.sum = sum;
         this.ownerId = ownerId;
+        this.year = year;
     }
-
 
     public double getSum() {
         return sum;
@@ -31,11 +32,11 @@ public class AccountCreateDto extends AuditedCreateDto {
         this.ownerId = ownerId;
     }
 
-    @Override
-    public String toString() {
-        return "AccountCreateDto{" +
-                "sum=" + sum +
-                ", ownerId=" + ownerId +
-                '}';
+    public double getYear() {
+        return year;
+    }
+
+    public void setYear(double year) {
+        this.year = year;
     }
 }
