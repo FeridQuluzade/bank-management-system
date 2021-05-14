@@ -6,14 +6,16 @@ public class Account extends BaseEntity {
     private long accId;
     private double sum;
     private long ownerId;
+    private double year;
 
     public Account() {
     }
 
-    public Account(long accId, double sum, long ownerId) {
+    public Account(long accId, double sum, long ownerId, double year) {
         this.accId = accId;
         this.sum = sum;
         this.ownerId = ownerId;
+        this.year = year;
     }
 
     public long getAccId() {
@@ -40,12 +42,11 @@ public class Account extends BaseEntity {
         this.ownerId = ownerId;
     }
 
-    @Override
-    public String toString() {
-        return "account{" +
-                "accId=" + accId +
-                ", sum=" + sum +
-                ", ownerId=" + ownerId +
-                '}';
+    public double getYear() {
+        return year;
+    }
+
+    public void setYear(double year) {
+        this.year = year;
     }
 }
