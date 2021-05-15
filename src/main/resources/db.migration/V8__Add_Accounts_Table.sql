@@ -3,6 +3,7 @@ create table accounts(
                        sum int8 null ,
                        year int8 null,
                        owner_id int8  null ,
+                       degree int8 null,
                        created_by int8 null,
                        created_date timestamp not null default CURRENT_TIMESTAMP,
                        updated_by int8 null,

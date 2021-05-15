@@ -7,15 +7,16 @@ public class Account extends BaseEntity {
     private double sum;
     private long ownerId;
     private double year;
-
+private double degree;
     public Account() {
     }
 
-    public Account(long accId, double sum, long ownerId, double year) {
+    public Account(long accId, double sum, long ownerId, double year, double degree) {
         this.accId = accId;
         this.sum = sum;
         this.ownerId = ownerId;
         this.year = year;
+        this.degree = degree;
     }
 
     public long getAccId() {
@@ -48,5 +49,13 @@ public class Account extends BaseEntity {
 
     public void setYear(double year) {
         this.year = year;
+    }
+
+    public double getDegree() {
+        return degree;
+    }
+
+    public void setDegree(double degree) {
+        this.degree = degree;
     }
 }
