@@ -7,15 +7,16 @@ public class AccountUpdateDto extends AuditedUpdateDto {
     private double sum;
     private long ownerId;
    private double year;
-
+private double degree;
     public AccountUpdateDto() {
     }
 
-    public AccountUpdateDto(long accId, double sum, long ownerId, double year) {
+    public AccountUpdateDto(long accId, double sum, long ownerId, double year, double degree) {
         this.accId = accId;
         this.sum = sum;
         this.ownerId = ownerId;
         this.year = year;
+        this.degree = degree;
     }
 
     public long getAccId() {
@@ -50,5 +51,11 @@ public class AccountUpdateDto extends AuditedUpdateDto {
         this.year = year;
     }
 
+    public double getDegree() {
+        return degree;
+    }
 
+    public void setDegree(double degree) {
+        this.degree = degree;
+    }
 }

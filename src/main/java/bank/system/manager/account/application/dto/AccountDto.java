@@ -5,15 +5,16 @@ public class AccountDto {
     private double sum;
     private long ownerId;
     private double year;
-
+private double degree;
     public AccountDto() {
     }
 
-    public AccountDto(long accId, double sum, long ownerId, double year) {
+    public AccountDto(long accId, double sum, long ownerId, double year, double degree) {
         this.accId = accId;
         this.sum = sum;
         this.ownerId = ownerId;
         this.year = year;
+        this.degree = degree;
     }
 
     public long getAccId() {
@@ -46,5 +47,13 @@ public class AccountDto {
 
     public void setYear(double year) {
         this.year = year;
+    }
+
+    public double getDegree() {
+        return degree;
+    }
+
+    public void setDegree(double degree) {
+        this.degree = degree;
     }
 }

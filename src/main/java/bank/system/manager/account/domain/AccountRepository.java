@@ -27,10 +27,10 @@ public class AccountRepository {
             while (resultSet.next()) {
                 long id = resultSet.getLong("id");
                 double sum = resultSet.getDouble("sum");
-                double year=resultSet.getDouble("year");
+                double year = resultSet.getDouble("year");
                 long owner_id = resultSet.getLong("owner_id");
-
-                accounts.add(new Account(id, sum, owner_id,year));
+                double degree = resultSet.getDouble("degree");
+                accounts.add(new Account(id, sum, owner_id, year, degree));
             }
             resultSet.close();
             preparedStatement.close();
@@ -55,10 +55,10 @@ public class AccountRepository {
             if (resultSet.next()) {
                 double sum = resultSet.getDouble("sum");
                 long owner_id = resultSet.getLong("owner_id");
-                double year=resultSet.getDouble("year");
-
-                Account account=new Account(id,sum,owner_id,year);
-                optionalAccount=Optional.of(account);
+                double year = resultSet.getDouble("year");
+                double degree = resultSet.getDouble("degree");
+                Account account = new Account(id, sum, owner_id, year, degree);
+                optionalAccount = Optional.of(account);
             }
             resultSet.close();
             preparedStatement.close();
@@ -73,60 +73,58 @@ public class AccountRepository {
 
     public long create(Account account) {
         try {
-
-
-
-            CustomerRepository customerRepository=new CustomerRepository();
-            Optional<Customer> optionalAccount=customerRepository
+            CustomerRepository customerRepository = new CustomerRepository();
+            Optional<Customer> optionalAccount = customerRepository
                     .findAll()
                     .stream()
-                    .filter(x->x.getStatus().equals("Active"))
-                    .filter(x->x.getId()==account.getOwnerId())
+                    .filter(x -> x.getStatus().equals("Active"))
+                    .filter(x -> x.getId() == account.getOwnerId())
                     .findAny();
+            if (optionalAccount.isPresent()) {
+                Class.forName(DRIVER_NAME);
+                Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+                String query =
+                        "insert into accounts(sum,owner_id,year,degree,created_by,created_date)" +
 
+                                "values (?,?,?,?,?,?) returning id";
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setDouble(1, account.getSum());
+                preparedStatement.setLong(2, account.getOwnerId());
+                preparedStatement.setDouble(3, account.getYear());
+                preparedStatement.setDouble(4, account.getDegree());
+                preparedStatement.setLong(5, account.getCreatedBy());
+                preparedStatement.setTimestamp(6, Timestamp.valueOf(account.getCreatedDate()));
+                ResultSet resultSet = preparedStatement.executeQuery();
+                resultSet.next();
 
-             if (optionalAccount.isPresent()){
-                 Class.forName(DRIVER_NAME);
-                 Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            String query =
-                    "insert into accounts(sum,owner_id,year,created_by,created_date)" +
+                long id = resultSet.getLong(1);
 
-                    "values (?,?,?,?,?) returning id";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setDouble(1, account.getSum());
-            preparedStatement.setLong(2,account.getOwnerId());
-            preparedStatement.setDouble(3, account.getYear());
-            preparedStatement.setLong(4, account.getCreatedBy());
-            preparedStatement.setTimestamp(5, Timestamp.valueOf(account.getCreatedDate()));
-            ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-
-            long id = resultSet.getLong(1);
-
-            resultSet.close();
-            preparedStatement.close();
-            connection.close();
-            return id;
-             }throw new RuntimeException("Status not Active !");
+                resultSet.close();
+                preparedStatement.close();
+                connection.close();
+                return id;
+            }
+            throw new RuntimeException("Status not Active !");
 
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e.getMessage());
         }
     }
-    public void update(Account account){
-        try{
-            Class.forName(DRIVER_NAME);
-            Connection connection=DriverManager.getConnection(URL,USER,PASSWORD);
-            String query="UPDATE accounts SET sum=?,year=?,owner_id=?,updated_by=?,updated_date=? "+
-                    "where  id=?";
-            PreparedStatement preparedStatement=connection.prepareStatement(query);
 
-            preparedStatement.setDouble(1,account.getSum());
-            preparedStatement.setDouble(2,account.getYear());
-            preparedStatement.setLong(3,account.getOwnerId());
-            preparedStatement.setLong(4,account.getUpdatedBy());
+    public void update(Account account) {
+        try {
+            Class.forName(DRIVER_NAME);
+            Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            String query = "UPDATE accounts SET sum=?,year=?,owner_id=?,updated_by=?,updated_date=? " +
+                    "where  id=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setDouble(1, account.getSum());
+            preparedStatement.setDouble(2, account.getYear());
+            preparedStatement.setLong(3, account.getOwnerId());
+            preparedStatement.setLong(4, account.getUpdatedBy());
             preparedStatement.setTimestamp(5, Timestamp.valueOf(account.getUpdatedDate()));
-            preparedStatement.setLong(6,account.getAccId());
+            preparedStatement.setLong(6, account.getAccId());
             preparedStatement.executeUpdate();
             preparedStatement.close();
             connection.close();
@@ -157,6 +155,5 @@ public class AccountRepository {
         }
 
     }
-
 
 }

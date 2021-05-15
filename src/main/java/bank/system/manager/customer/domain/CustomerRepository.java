@@ -28,6 +28,7 @@ public class CustomerRepository {
                 long id = resultSet.getLong("id");
                 String name = resultSet.getString("name");
                 String gender = resultSet.getString("gender");
+
                 String married = resultSet.getString("married");
                 String status = resultSet.getString("status");
                 long contact_id = resultSet.getLong("contact_id");

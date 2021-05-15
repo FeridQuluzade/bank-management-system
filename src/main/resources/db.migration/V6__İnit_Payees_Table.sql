@@ -1,6 +1,7 @@
 create table payees(
                        id bigserial NOT NULL ,
-                       payment int8 null,
+                       payment_year int8 null,
+                       payment_month int8 null,
                        accountid int8 null,
                        created_by int8 null,
                        created_date timestamp not null default CURRENT_TIMESTAMP,
@@ -14,5 +15,4 @@ create table payees(
                        constraint fk_customer_created_by foreign key (created_by) references users (id),
                        constraint fk_customer_updated_by foreign key (updated_by) references users (id),
                        constraint fk_customer_deleted_by foreign key (deleted_by) references users (id)
-
 );
